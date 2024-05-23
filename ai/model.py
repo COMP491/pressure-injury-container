@@ -20,7 +20,7 @@ class ModelUtils:
         self.classes = ['1', '2', '3', '4']
         self.model = models.resnet18(weights='ResNet18_Weights.IMAGENET1K_V1')
         fclayer_input_size = self.model.fc.in_features
-        self.model.fc = nn.Linear(fclayer_input_size, len(self.classes)) 
+        self.model.fc = nn.Linear(fclayer_input_size, len(self.classes))
         self.model.load_state_dict(torch.load(model_weights_path, map_location="cpu"))
         self.model.to(device)
         self.model.eval()
@@ -57,4 +57,4 @@ class ModelUtils:
         img = self.unnormalize(image_tensor[0])
         cam_image = show_cam_on_image(img, grayscale_cam, use_rgb=True)
 
-        return self.classes[predicted[0].item()], cam_image
+        return self.classes[predicted[0].item()], img, cam_image
